@@ -5,10 +5,6 @@
 
 local M = {};
 
-local tostring = tostring
-local type = type
-local pairs = pairs
-local ipairs = ipairs
 local table_format = string.format
 local string_len = string.len
 local string_rep = string.rep
@@ -115,15 +111,11 @@ function M.serialize(t, tabName,path)
 
     local str = "do local " .. tabName .. " =\n"..dump(t) .. string.format("\nreturn %s end",tabName);
     -- local path = System.getStorageTempPath()  .. tabName .. ".lua"
-    if path and os.isdir(path) then
-    	local path = path.. "/".. tabName .. ".lua"
-    	-- print_string("dumptoFile1",path)
-    	M.writefile(str,path)
-    else
-    	local path = System.getStorageTempPath() .. "../scripts/"  .. tabName .. ".lua"
-    	-- print_string("dumptoFile2",path)
-    	M.writefile(str,path)
+    local filePath = tabName .. ".lua"
+    if path then
+        filePath = path .. "/" .. filePath
     end
+    M.writefile(str,filePath)
     return str;
 end
 
@@ -138,14 +130,7 @@ function M.writefile(str, file)
 end
 
 
-function M.dumpToFile(tabName,t,path)
-    if not BYKit.BYKitConfig.isDebug then
-        return;
-    end
-	if System.PlatformWin32 ~= sys_get_string("platform") then
-        return;
-    end
-
+function M.dumpToFile(t,tabName,path)
 	return M.serialize(t,tabName,path)
 end
 

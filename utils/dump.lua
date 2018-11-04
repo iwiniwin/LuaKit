@@ -2,19 +2,8 @@
 --格式化输出table（格式化过程中，排序操作会比较耗时）
 --@module dump
 --@author myc
-local UI = BYEngine.UI;
-
-
-local ignoreEngineObj = true;
-
 local isSort  = true;
 
-local print = print_string;
-
-local tostring = tostring
-local type = type
-local pairs = pairs
-local ipairs = ipairs
 local table_format = string.format
 local string_len = string.len
 local string_rep = string.rep
@@ -36,18 +25,12 @@ end
 --@usage local t = {key = "xxx"}
 --dump(t)
 local function dump(value, desciption, nesting)
-
-    if not BYKit.BYKitConfig or not BYKit.BYKitConfig.isDebug then
-        return;
-    end
-
     if type(nesting) ~= "number" then nesting = 10 end
 
     local lookup = {}
     local result = {}
     local traceback = string.split(debug_traceback("", 2), "\n")
     
-    sys_set_int("win32_console_color", 10)
     --print("dump from: " .. string.trim(traceback[3]))
     local str = "- dump from: " .. string.trim(traceback[3]);
     print(str);
@@ -61,10 +44,6 @@ local function dump(value, desciption, nesting)
             result[#result +1 ] = table_format("%s%s%s = %s", indent, _dump_value(desciption), spc, _dump_value(value))
         elseif lookup[tostring(value)] then
             result[#result +1 ] = table_format("%s%s%s = *REF*", indent, _dump_value(desciption), spc)
-        elseif typeof and DrawingBase and typeof(value,DrawingBase) and ignoreEngineObj then
-            result[#result +1 ] = table_format("%s%s%s = *DrawingBase_REF*", indent, _dump_value(desciption), spc)
-        elseif typeof and typeof(value,UI.View) and ignoreEngineObj then
-            result[#result +1 ] = table_format("%s%s%s = 'UI.VIEW_REF_'", indent, _dump_value(desciption), spc)
         else
             lookup[tostring(value)] = true
             if nest > nesting then
@@ -110,7 +89,6 @@ local function dump(value, desciption, nesting)
         print(line)
     end
 
-    sys_set_int("win32_console_color", 15)
 end
 
 return dump;
