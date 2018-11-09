@@ -2,6 +2,8 @@
 require("core.object")
 require("lib.string")
 
+time = require("lib.time")
+
 dump = require("utils.dump")
 
 

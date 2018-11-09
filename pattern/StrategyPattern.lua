@@ -1,5 +1,5 @@
 package.path = package.path .. ";..\\?.lua;"
-require("env")
+require("_load")
 --[[
     策略模式
     定义：

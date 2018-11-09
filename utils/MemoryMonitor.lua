@@ -5,7 +5,7 @@
 ]]
 
 package.path = package.path .. ";..\\?.lua;"
-require("env")
+require("_load")
 
 -- 监控间隔配置（单位：秒）
 local MonitorConfig = {
