@@ -1,5 +1,5 @@
 package.path = package.path .. ";..\\?.lua;"
-require("env")
+require("_load")
 --[[
     责任链模式
     定义：
@@ -32,26 +32,17 @@ function PriceHandler:setSuccessor( successor )
     self.successor = successor
 end
 
--- 目前是三个Handler，scale销售 和 manager经理 和 ceo
+-- 目前是三个Handler，sale销售 和 manager经理 和 ceo
 
-local Scale = class(PriceHandler)
-Scale._class_name = "Scale"
+local Sale = class(PriceHandler)
+Sale._class_name = "Sale"
 
-function Scale:processDiscount( discount )
+function Sale:processDiscount( discount )
     if discount < 0.2 then
-        print("scale处理了" .. discount .. "的折扣")
+        print("sale处理了" .. discount .. "的折扣")
     else
         self.successor:processDiscount(discount)
     end
-end
-
--- lua版class实现有问题，会子类覆盖父类，这里的父类暂时用不同的对象
-local PriceHandler = class()
-function PriceHandler:ctor( ... )
-    assert(self.processDiscount, "子类必须实现processDiscount接口")
-end
-function PriceHandler:setSuccessor( successor )
-    self.successor = successor
 end
 
 local Manager = class(PriceHandler)
@@ -63,15 +54,6 @@ function Manager:processDiscount( discount )
     else
         self.successor:processDiscount(discount)
     end
-end
-
--- lua版class实现有问题，会子类覆盖父类，这里的父类暂时用不同的对象
-local PriceHandler = class()
-function PriceHandler:ctor( ... )
-    assert(self.processDiscount, "子类必须实现processDiscount接口")
-end
-function PriceHandler:setSuccessor( successor )
-    self.successor = successor
 end
 
 local CEO = class(PriceHandler)
@@ -92,17 +74,17 @@ local PriceHandlerFactor = class()
 
 function PriceHandlerFactor.createPriceHandler( ... )
     -- 构造责任链
-    local scale = new(Scale)
+    local sale = new(Sale)
     local manager = new(Manager)
     local ceo = new(CEO)
     -- 销售设置后继是经理
-    scale:setSuccessor(manager)
+    sale:setSuccessor(manager)
     -- 经理的后继是ceo
     manager:setSuccessor(ceo)
     -- ceo不存在直接后继
 
-    -- 由scale优先处理
-    return scale
+    -- 由sale优先处理
+    return sale
 end
 
 
@@ -133,14 +115,6 @@ end
 -- 只需要添加一个vp类，同时修改以下工厂方法
 print("加入一个vp角色")
 
-local PriceHandler = class()
-function PriceHandler:ctor( ... )
-    assert(self.processDiscount, "子类必须实现processDiscount接口")
-end
-function PriceHandler:setSuccessor( successor )
-    self.successor = successor
-end
-
 local VP = class(PriceHandler)
 
 function VP:processDiscount( discount )
@@ -152,13 +126,13 @@ function VP:processDiscount( discount )
 end
 
 function PriceHandlerFactor.createPriceHandler( ... )
-    local scale = new(Scale)
+    local sale = new(Sale)
     local manager = new(Manager)
     local ceo = new(CEO)
     -- 添加一个vp
     local vp = new(VP)
     -- 销售设置后继是经理
-    scale:setSuccessor(manager)
+    sale:setSuccessor(manager)
 
     -- 修改经理的后继为vp
     manager:setSuccessor(vp)
@@ -167,8 +141,8 @@ function PriceHandlerFactor.createPriceHandler( ... )
     vp:setSuccessor(ceo)
     -- ceo不存在直接后继
 
-    -- 由scale优先处理
-    return scale
+    -- 由sale优先处理
+    return sale
 end
 
 

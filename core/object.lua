@@ -7,7 +7,7 @@
 -- @usage require("core/object")
 
 -- object.lua
--- Author: Vicent Gong
+-- Author: Lei.Zhang
 -- Date: 2012-09-30
 -- Last modification : 2013-5-29
 -- Description: Provide object mechanism for lua
@@ -54,21 +54,21 @@
 --  self.m_sex = "m"
 --  self.m_name = name
 -- end
-function class(super, autoConstructSuper)
-  local classType = {
-      autoConstructSuper = autoConstructSuper or (autoConstructSuper == nil)
-  };
-  if super then
-    classType.super = super;
-    setmetatable(classType, { __index = super, __newindex = super, __call = new, __class=1 });
-  else
-    setmetatable(classType, { __call = new });
-    classType.setDelegate = function(self,delegate)
-      self.m_delegate = delegate;
-    end
-  end
 
-  return classType;
+function class( super, autoConstructSuper )
+    local classType = {
+        autoConstructSuper = autoConstructSuper or (autoConstructSuper == nil)
+    }
+    if super then
+        classType.super = super
+        local mt = getmetatable(super)
+        setmetatable(classType, {__index = super})
+    else
+        classType.setDelegate = function( self, delegate )
+            self.m_delegate = delegate
+        end
+    end
+    return classType
 end
 
 ---------------------Global functon super ----------------------------------------------
