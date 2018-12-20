@@ -56,7 +56,8 @@ end
 
 local function nearPoints( cur, ends, blocks, closeList, row, col )
     local x, y = cur.x, cur.y
-    local points = {{x = x -1, y = y}, {x = x + 1, y = y}, {x = x, y = y -1}, {x = x, y = y + 1}}
+    local points = {
+        {x = x -1, y = y}, {x = x + 1, y = y}, {x = x, y = y -1}, {x = x, y = y + 1}}
     for i = #points, 1, -1 do
         if usablePoint(points[i], blocks, closeList, row, col) then
             local g, h = estimate(points[i], ends)
@@ -140,4 +141,40 @@ local function AStar( start, ends, row, col, blocks )
 end
 
 
-AStar({x = 3, y = 3}, {x =7, y = 3}, 6, 8, {{x =5, y = 1}, {x = 5, y = 2}, {x = 5, y = 3}, {x = 5, y = 4}, {x = 5, y = 5}, {x =5, y = 6}})
+-- AStar({x = 3, y = 3}, {x =7, y = 3}, 6, 8, {{x =5, y = 1}, {x = 5, y = 2}, {x = 5, y = 3}, {x = 5, y = 4}, {x = 5, y = 5}, {x =5, y = 6}})
+
+local a = {
+    -- [3] = "lll"
+}
+
+local b = {
+    length = 0
+}
+
+setmetatable(a, {
+    __newindex = function ( t, k, v )
+        if b[k] ~= nil and v == nil then
+            b.length = b.length -1
+        elseif b[k] == nil and v ~= nil then
+            b.length = b.length + 1
+        end
+        b[k] = v
+    end,
+    __index = b
+})
+
+
+a[3] = 5
+
+
+a[3] = 4
+
+-- a[3] = nil
+
+a["ssdf"] = 'uuu'
+
+a[3] = nil
+dump(a, "ffffffff")
+
+
+dump(a.length)
