@@ -52,9 +52,31 @@ local function testLoadModule( ... )
     end
 end
 
+-- 测试性能分析
+local function testProfile( ... )
+    local new_profiler = require("utils.profiler")
+    local profiler = new_profiler("call")
+    profiler:start()  -- 开启性能分析
+
+    local function aaa( ... )
+        for i = 1, 10000000 do
+
+        end
+    end
+    local function ttt( ... )
+        aaa()
+    end
+    ttt()
+
+    profiler:stop()  -- 停止性能分析
+    -- 输出分析结果到文件
+    profiler:dump_report_to_file("profile.txt")
+end
+
 -- testOOP()
 -- testDump()
 -- testLoadModule()
+testProfile()
 
 -- https://blog.csdn.net/u012723995/article/details/40455357
--- 模块加载 性能分析 面向对象 组件 事件系统 数据观察追踪 回退系统 MVC
+-- 组件 事件系统 数据观察追踪 回退系统
