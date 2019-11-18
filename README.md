@@ -75,3 +75,57 @@ ModuleConfig.Module2 = {
 
 return ModuleConfig
 ```
+
+### 性能分析
+通过LuaKit提供的profile工具，可以获取函数的调用情况，调用次数，调用时间，子函数调用时间等信息，以此来分析是否存在异常的函数调用或耗时操作。在需要进行性能优化时十分有用。
+```lua
+local new_profiler = require("utils.profiler")
+local profiler = new_profiler("call")
+profiler:start()  -- 开启性能分析
+
+local function aaa(  )
+    for i = 1, 10000000 do
+
+    end
+end
+local function ttt(  )
+    aaa()
+end
+ttt()
+-- 同时支持分析协程内的函数调用情况
+local co = coroutine.create(function ( ... )
+    aaa()
+end)
+coroutine.resume(co)
+
+profiler:stop()  -- 停止性能分析
+-- 输出分析结果到文件
+profiler:dump_report_to_file("profile.txt")
+```
+分析结果部分内容如下
+```
+Total time spent in profiled functions: 0.113s
+Total call count spent in profiled functions: 12
+Lua Profile output created by profiler.lua. author: myc 
+
+-----------------------------------------------------------------------------------
+| FILE                            : FUNCTION         : TIME   : %     : Call count|
+-----------------------------------------------------------------------------------
+| L:E:\Project\LuaKit\test.lua:61 : aaa              : 0.1130 : 100.0 :         2 |
+| L:E:\Project\LuaKit\test.lua:71 : unknow           : 0.0580 : 51.3  :         1 |
+| C:resume@=[C]:-1                : resume           : 0.0580 : 51.3  :         1 |
+| L:E:\Project\LuaKit\test.lua:66 : ttt              : 0.0550 : 48.7  :         1 |
+| C:insert@=[C]:-1                : insert           : ~      : ~     :         1 |
+| C:sethook@=[C]:-1               : sethook          : ~      : ~     :         2 |
+| C:coroutine_create@=[C]:-1      : coroutine_create : ~      : ~     :         1 |
+| L:.\utils\profiler.lua:122      : stop             : ~      : ~     :         1 |
+| C:clock@=[C]:-1                 : clock            : ~      : ~     :         1 |
+| L:.\utils\profiler.lua:106      : create           : ~      : ~     :         1 |
+-----------------------------------------------------------------------------------
+
+--------------------- L:aaa@@E:\Project\LuaKit\test.lua:61 ---------------------
+Call count:            2
+Time spend total:       0.1130s
+Time spent in children: 0.0000s
+Time spent in self:     0.1130s
+```

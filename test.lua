@@ -58,15 +58,21 @@ local function testProfile( ... )
     local profiler = new_profiler("call")
     profiler:start()  -- 开启性能分析
 
-    local function aaa( ... )
+    local function aaa(  )
         for i = 1, 10000000 do
 
         end
     end
-    local function ttt( ... )
+    local function ttt(  )
         aaa()
     end
     ttt()
+
+    -- 同时支持分析协程内的函数调用情况
+    local co = coroutine.create(function ( ... )
+        aaa()
+    end)
+    coroutine.resume(co)
 
     profiler:stop()  -- 停止性能分析
     -- 输出分析结果到文件
@@ -78,5 +84,4 @@ end
 -- testLoadModule()
 testProfile()
 
--- https://blog.csdn.net/u012723995/article/details/40455357
 -- 组件 事件系统 数据观察追踪 回退系统

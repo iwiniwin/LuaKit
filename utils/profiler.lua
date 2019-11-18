@@ -100,6 +100,16 @@ function Profiler:start( ... )
         self.setstepmul = collectgarbage("setstepmul")
         collectgarbage("setpause", 300)
         collectgarbage("setstepmul", 5000)
+
+        self.coroutine_create = coroutine.create
+        self.coroutines = {}
+        coroutine.create = function(...)
+            local co = self.coroutine_create(...)
+            table.insert(self.coroutines, co)
+            debug.sethook(co,profiler_hook_wrapper_by_call, "cr")
+            return co
+        end
+
         debug.sethook(profiler_hook_wrapper_by_call, "cr")
     else
         error("Profiler method must be 'time' or 'call'")
@@ -115,6 +125,12 @@ function Profiler:stop( ... )
         return
     end
     self.end_time = os.clock()
+
+    if self.coroutine_create then
+        coroutine.create = self.coroutine_create
+        self.coroutine_create = nil
+    end
+    
     -- 停止性能分析
     debug.sethook(nil)
     if self.variant == "call" then
