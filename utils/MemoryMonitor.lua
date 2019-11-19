@@ -22,9 +22,6 @@
     collectgarbage("stop") : 停止垃圾收集器的运行。在调用重启前，收集器只会因显示的调用运行
 ]]
 
-package.path = package.path .. ";..\\?.lua;"
-require("_load")
-
 -- 监控间隔配置（单位：秒）
 local MonitorConfig = {
     -- 内存泄漏监控间隔
@@ -53,7 +50,7 @@ end
 
 --[[
 把一个表或者对象添加到内存检测工具中，如果该表或者对象不存在外部引用，则说明释放干净
-否则内存泄漏工具会输出工具
+否则内存泄漏工具会输出日志
 @table t 观察的对象 表
 @string tName 表的别名
 
@@ -116,28 +113,7 @@ function MemoryMonitor:__memLeakMonitoring( ... )
     end
 end
 
-
---测试代码
-
-a = {}
-
-local memoryMonitor = new(MemoryMonitor)
-
-function test( ... )
-    local b = {xxx = "xxx"}
-    a.b = b
-    memoryMonitor:addToLeakMonitor(b, "b")  --将b添加到内存检测工具，此时a没有被释放掉 则b也释放不掉
-end
-
-test()
-
--- 由于a在引用b，因此b存在内存泄漏
-memoryMonitor:update()
-
--- a不再引用b，b也被释放
-a = nil
-memoryMonitor:update()
-
+return MemoryMonitor
 
 --[[
 -- TODO 待研究情况

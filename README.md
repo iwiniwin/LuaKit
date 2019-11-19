@@ -129,3 +129,31 @@ Time spend total:       0.1130s
 Time spent in children: 0.0000s
 Time spent in self:     0.1130s
 ```
+
+### 内存泄漏检测
+对于游戏开发而言，内存泄露往往是最容易忽视的问题，很多开发者并不知道自己的代码是否存在内存泄露。此类问题可以借助MemoryMonitor来检测，具体原理是借助lua的弱引用，把某个需要观察的对象加入到弱表，如果不存在外部引用，那么在gc时候，弱表上的该对象也就自然消失，如果弱表还存在该对象，说明外部仍存在引用。
+```lua
+local MemoryMonitor = require("utils.MemoryMonitor")
+local memoryMonitor = new(MemoryMonitor)
+
+a = {}
+function test( ... )
+    local b = {xxx = "xxx"}
+    a.b = b
+    memoryMonitor:addToLeakMonitor(b, "b")  --将b添加到内存检测工具，此时a没有被释放掉 则b也释放不掉
+end
+test()
+
+-- 由于a在引用b，因此b存在内存泄漏
+memoryMonitor:update()  -- 这里会打印日志
+
+-- a不再引用b，b也被释放
+a = nil
+memoryMonitor:update()  -- 没有内存泄漏，这里不会打印日志
+```
+第一次update时存在内存泄漏，输出如下所示
+```
+存在以下内存泄漏：    
+b@table: 02C5F7A8 = table: 02C5F7A8
+请仔细检查代码！！！
+```

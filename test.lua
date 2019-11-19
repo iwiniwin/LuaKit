@@ -79,9 +79,31 @@ local function testProfile( ... )
     profiler:dump_report_to_file("profile.txt")
 end
 
+-- 测试内存泄漏检测工具
+local function testMemoryMonitor( ... )
+    local MemoryMonitor = require("utils.MemoryMonitor")
+    local memoryMonitor = new(MemoryMonitor)
+
+    a = {}
+    function test( ... )
+        local b = {xxx = "xxx"}
+        a.b = b
+        memoryMonitor:addToLeakMonitor(b, "b")  --将b添加到内存检测工具，此时a没有被释放掉 则b也释放不掉
+    end
+    test()
+
+    -- 由于a在引用b，因此b存在内存泄漏
+    memoryMonitor:update()
+
+    -- a不再引用b，b也被释放
+    a = nil
+    memoryMonitor:update()  -- 没有内存泄漏，这里不会打印日志
+end
+
 -- testOOP()
 -- testDump()
 -- testLoadModule()
-testProfile()
+-- testProfile()
+testMemoryMonitor()
 
 -- 组件 事件系统 数据观察追踪 回退系统
