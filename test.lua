@@ -1,3 +1,12 @@
+--[[--
+LuaKit测试用例
+@module test
+@author iwiniwin
+
+Date   2019-11-15 19:20:39
+Last Modified by   iwiniwin
+Last Modified time 2020-01-16 13:43:51
+]]
 require("_load")
 
 -- 测试面向对象

@@ -1,3 +1,12 @@
+--[[--
+lua内存泄漏检测工具
+@module MemoryMonitor
+@author iwiniwin
+
+Date   2019-11-15 19:20:39
+Last Modified by   iwiniwin
+Last Modified time 2020-01-16 13:42:34
+]]
 --[[
     lua内存泄漏检测工具
     原理：弱表中的引用是弱引用，不会导致对象的引用计数发生变化

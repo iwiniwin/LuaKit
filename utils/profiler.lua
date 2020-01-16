@@ -1,5 +1,11 @@
---[[
-    lua性能分析工具
+--[[--
+lua性能分析工具
+@module profiler
+@author iwiniwin
+
+Date   2019-11-15 19:20:39
+Last Modified by   iwiniwin
+Last Modified time 2020-01-16 13:45:50
 ]]
 --[[
     debug.getinfo(level, arg) : 返回一个包含函数信息的table
@@ -321,7 +327,7 @@ end
 ]]
 function Profiler:report()
     local lines = {};
-    table.insert(lines,[[Lua Profile output created by profiler.lua. author: myc ]])
+    table.insert(lines,[[Lua Profile output created by profiler.lua. author: iwiniwin ]])
     table.insert(lines, "\n\n" )
     local total_time = self.end_time - self.start_time
 

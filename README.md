@@ -114,7 +114,7 @@ profiler:dump_report_to_file("profile.txt")
 ```
 Total time spent in profiled functions: 0.113s
 Total call count spent in profiled functions: 12
-Lua Profile output created by profiler.lua. author: myc 
+Lua Profile output created by profiler.lua. author: iwiniwin 
 
 -----------------------------------------------------------------------------------
 | FILE                            : FUNCTION         : TIME   : %     : Call count|

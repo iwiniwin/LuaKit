@@ -1,10 +1,10 @@
---[[--ldoc desc
+--[[--文件操作
 @module File
-@author LensarZhang
+@author iwiniwin
 
-Date   2018-04-18 11:56:06
-Last Modified by   LensarZhang
-Last Modified time 2018-04-18 14:45:57
+Date   2020-01-16 13:27:14
+Last Modified by   iwiniwin
+Last Modified time 2020-01-16 13:45:04
 ]]
 local File = {}
 

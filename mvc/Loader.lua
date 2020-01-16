@@ -1,9 +1,11 @@
---[[--模块加载器
-@author LeirZhang
+--[[--
+模块加载器
+@module Loader
+@author iwiniwin
 
 Date   2019-11-15 19:20:39
-Last Modified by   LeirZhang
-Last Modified time 2019-11-15 19:22:12
+Last Modified by   iwiniwin
+Last Modified time 2020-01-16 13:38:29
 ]]
 local ModuleConfig = require("mvc.ModuleConfig")
 

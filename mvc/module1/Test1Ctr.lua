@@ -1,9 +1,10 @@
 --[[--Test1Ctr 示例Ctr
-@author LeirZhang
+@module Test1Ctr
+@author iwiniwin
 
 Date   2019-11-15 19:20:39
-Last Modified by   LeirZhang
-Last Modified time 2019-11-15 19:22:12
+Last Modified by   iwiniwin
+Last Modified time 2020-01-16 13:44:50
 ]]
 local Test1Ctr = class()
 Test1Ctr._className = "Test1Ctr"

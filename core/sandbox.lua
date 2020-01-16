@@ -1,4 +1,11 @@
+--[[--lua沙盒
+@module sandbox
+@author iwiniwin
 
+Date   2020-01-16 13:27:14
+Last Modified by   iwiniwin
+Last Modified time 2020-01-16 13:45:08
+]]
 --[[
 2. lua沙盒
 理解：lua沙盒就是通过改变上下文环境，使函数可以在不同的环境表中运行，访问得到限制，从而避免相互

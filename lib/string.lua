@@ -1,9 +1,11 @@
----Open source string library that supplies additional LUA string functions
---@module StringLib
---@author myc
---@license myc
---@version 1.0.0
---@copyright boyaa.cy
+--[[--字符串操作
+@module string
+@author iwiniwin
+
+Date   2020-01-16 13:27:14
+Last Modified by   iwiniwin
+Last Modified time 2020-01-16 13:44:59
+]]
 
 
 -- local string = {};

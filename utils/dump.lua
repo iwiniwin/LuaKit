@@ -1,7 +1,13 @@
----
---格式化输出table（格式化过程中，排序操作会比较耗时）
---@module dump
---@author myc
+--[[--
+格式化输出table（格式化过程中，排序操作会比较耗时）
+@module dump
+@author iwiniwin
+
+Date   2019-11-15 19:20:39
+Last Modified by   iwiniwin
+Last Modified time 2020-01-16 13:41:51
+]]
+
 local isSort  = true;
 
 local table_format = string.format

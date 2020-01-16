@@ -1,9 +1,11 @@
---[[--ldoc desc
-@author LensarZhang
+--[[--
+ModuleConfig
+@module ModuleConfig
+@author iwiniwin
 
-Date   2019-11-15 19:22:35
-Last Modified by   LensarZhang
-Last Modified time 2019-11-15 19:24:42
+Date   2019-11-15 19:20:39
+Last Modified by   iwiniwin
+Last Modified time 2020-01-16 13:38:52
 ]]
 local ModuleConfig = {}
 

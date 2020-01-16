@@ -1,9 +1,11 @@
---[[--Test1View 示例View
-@author LeirZhang
+--[[--ldoc desc
+Test1View 示例View
+@module Test1View
+@author iwiniwin
 
 Date   2019-11-15 19:20:39
-Last Modified by   LeirZhang
-Last Modified time 2019-11-15 19:22:12
+Last Modified by   iwiniwin
+Last Modified time 2020-01-16 13:37:20
 ]]
 local Test1Ctr = require("mvc.module1.Test1Ctr")
 local Test1View = class()

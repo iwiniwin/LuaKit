@@ -1,18 +1,15 @@
+--[[--用于模拟面向对象
+@usage require("core/object")
+@module object
+@author iwiniwin
 
+Date   2020-01-16 13:27:14
+Last Modified by   iwiniwin
+Last Modified time 2020-01-16 13:45:13
+]]
 --------------------------------------------------------------------------------
--- 用于模拟面向对象
---
--- @module core.object
--- @return #nil
--- @usage require("core/object")
 
--- object.lua
--- Author: Lei.Zhang
--- Date: 2012-09-30
--- Last modification : 2013-5-29
 -- Description: Provide object mechanism for lua
-
-
 -- Note for the object model here:
 --		1.The feature like C++ static members is not support so perfect.
 --		What that means is that if u need something like c++ static members,

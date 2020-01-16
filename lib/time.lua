@@ -1,3 +1,11 @@
+--[[--时间操作
+@module time
+@author iwiniwin
+
+Date   2020-01-16 13:27:14
+Last Modified by   iwiniwin
+Last Modified time 2020-01-16 13:44:56
+]]
 local time = {}
 
 -- time.sleep = function ( num )

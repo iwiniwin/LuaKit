@@ -1,9 +1,11 @@
---[[--Test2Ctr 示例Ctr
-@author LeirZhang
+--[[--ldoc desc
+Test2Ctr 示例Ctr
+@module Test2Ctr
+@author iwiniwin
 
 Date   2019-11-15 19:20:39
-Last Modified by   LeirZhang
-Last Modified time 2019-11-15 19:22:12
+Last Modified by   iwiniwin
+Last Modified time 2020-01-16 13:37:37
 ]]
 local Test2Ctr = class()
 Test2Ctr._className = "Test2Ctr"
