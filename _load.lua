@@ -15,7 +15,7 @@ time = require("lib.time")
 dump = require("utils.dump")
 
 
-dump_to_file = require("utils.dump_to_file").dumpToFile
+dump_to_file = require("utils.dump_to_file").dump_to_file
 
 --[[
     什么叫组合 Composition

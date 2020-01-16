@@ -54,14 +54,14 @@ end
 
 
 ---Checks to see if the string starts with the given characters
-function string.startsWith(str, chars)
+function string.starts_with(str, chars)
 	return chars == '' or string.sub(str, 1, string.len(chars)) == chars
 end
 
 
 
 ---Checks to see if the string ends with the given characters
-function string.endsWith(str, chars)
+function string.ends_with(str, chars)
 	return chars == '' or string.sub(str, -string.len(chars)) == chars
 end
 
@@ -69,7 +69,7 @@ end
 
 ---Removes the length from the start of the string, returning the result
 ---Length can be a number or string
-function string.removeFromStart(str, length)
+function string.remove_from_start(str, length)
 	if (type(length) == 'number') then
 		return string.sub(str, length + 1, string.len(str))
 	elseif (type(length) == 'string') then
@@ -83,7 +83,7 @@ end
 
 ---Removes the length from the end of the string, returning the result
 ---Length can be a number or string
-function string.removeFromEnd(str, length)
+function string.remove_from_end(str, length)
 	if (type(length) == 'number') then
 		return string.sub(str, 1, string.len(str) - length)
 	elseif (type(length) == 'string') then
@@ -120,7 +120,7 @@ end
 
 
 ---Removes all occurrences of the pattern from the string
-function string.removeAll(str, pattern)
+function string.remove_all(str, pattern)
 	if (pattern == '' or pattern == nil) then
 		return str
 	end
@@ -134,7 +134,7 @@ end
 
 
 ---Removes the first occurrence of the pattern from the string
-function string.removeFirst(str, pattern)
+function string.remove_first(str, pattern)
 	if (pattern == '' or pattern == nil) then
 		return str
 	end
@@ -164,7 +164,7 @@ end
 
 
 ---Returns the first substring which matches the pattern in the string from a start index
-function string.findPattern(str, pattern, start)
+function string.find_pattern(str, pattern, start)
 	if (pattern == '' or pattern == nil) then
 		return ''
 	end
@@ -226,7 +226,7 @@ end
 
 ---Returns the array of word contained within the string
 ---Array index starts at 1
-function string.toWordArray(str)
+function string.to_word_array(str)
 	local words = {}
 	local index = 1
 	
@@ -241,7 +241,7 @@ end
 
 
 ---Returns the number of letters within the string
-function string.letterCount(str)
+function string.letter_count(str)
 	local _, count = string.gsub(str, '%a', '')
 	return count
 end
@@ -249,7 +249,7 @@ end
 
 
 ---Returns the number of spaces within the string
-function string.spaceCount(str)
+function string.space_count(str)
 	local _, count = string.gsub(str, '%s', '')
 	return count
 end
@@ -257,7 +257,7 @@ end
 
 
 ---Returns the number of times the pattern occurs within the string
-function string.patternCount(str, pattern)
+function string.pattern_count(str, pattern)
 	if (pattern == '' or pattern == nil) then
 		return nil
 	end
@@ -270,7 +270,7 @@ end
 
 ---Returns a table of how many of each character appears in the string
 ---Table in the format: ["char"] = 2
-function string.charTotals(str)
+function string.char_totals(str)
 	local totals = {}
 	local temp = ''
 	
@@ -287,7 +287,7 @@ function string.charTotals(str)
 end
 
 --模糊搜索，返回true、false,匹配单词中如果含有特殊字符串，返回false
-function string.fuzzyMatch(sourceStr,  searchStr)
+function string.fuzzy_match(sourceStr,  searchStr)
 	if string.find(searchStr,"[().%+-*?[^$]")then
 		return 
 	end 
@@ -300,7 +300,7 @@ function string.fuzzyMatch(sourceStr,  searchStr)
 end
 
 ---Returns the number of words within the string
-function string.wordCount(str)
+function string.word_count(str)
 	local _, count = string.gsub(str, '%w+', '')
 	return count
 end
@@ -308,7 +308,7 @@ end
 
 
 ---Returns a string which contains the lengths of each each word found in the given string
-function string.wordLengths(str)
+function string.word_length(str)
 	local lengths = string.gsub(str, '%w+', function(w) return string.len(w) end)
 	return lengths
 end
@@ -317,7 +317,7 @@ end
 
 ---Returns a table of how many of each word appears in the string
 ---Table in the format: ["word"] = 2
-function string.wordTotals(str)
+function string.word_totals(str)
 	local totals = {}
 	
 	for word in string.gmatch(str, '%w+') do
@@ -335,7 +335,7 @@ end
 
 ---Returns byte (unicode) representation of each character within the string as an array
 ---Array index starts at 1
-function string.toByteArray(str)
+function string.to_byte_array(str)
 	local bytes = {}
 	
 	for i = 1, string.len(str), 1 do
@@ -349,7 +349,7 @@ end
 
 ---Returns character representation of each character within the string as an array
 ---Array index starts at 1
-function string.toCharArray(str)
+function string.to_char_array(str)
 	local chars = {}
 	
 	for i = 1, string.len(str), 1 do
@@ -362,7 +362,7 @@ end
 
 
 ---Returns a string where occurrences of the pattern are put into upper-case
-function string.patternToUpper(str, pattern)
+function string.pattern_to_upper(str, pattern)
 	if (pattern == '' or pattern == nil) then
 		return str
 	end
@@ -374,7 +374,7 @@ end
 
 
 ---Returns a string where occurrences of the pattern are put into lower-case
-function string.patternToLower(str, pattern)
+function string.pattern_to_lower(str, pattern)
 	if (pattern == '' or pattern == nil) then
 		return str
 	end
@@ -403,7 +403,7 @@ end
 
 
 ---Replaces the character at the given index with the given characters
-function string.replaceAt(str, index, chars)
+function string.replace_at(str, index, chars)
 	return table.concat{string.sub(str, 1, index - 1), chars, string.sub(str, index + 1)}
 end
 
@@ -411,7 +411,7 @@ end
 
 ---Returns a string, where the given string's occurrences of the pattern is replaced by
 ---the given characters
-function string.replaceAll(str, pattern, chars)
+function string.replace_all(str, pattern, chars)
 	if (pattern == '' or pattern == nil) then
 		return str
 	end
@@ -424,7 +424,7 @@ end
 
 ---Returns a string, where the given string's first occurrence of the pattern is replaced
 ---by the given characters
-function string.replaceFirst(str, pattern, chars)
+function string.replace_first(str, pattern, chars)
 	if (pattern == '' or pattern == nil) then
 		return str
 	end
@@ -437,7 +437,7 @@ end
 
 ---Returns the index within the string for the first occurrence of the pattern after the
 ---given starting index
-function string.indexOf(str, pattern, start)
+function string.index_of(str, pattern, start)
 	if (pattern == '' or pattern == nil) then
 		return nil
 	end
@@ -453,7 +453,7 @@ end
 
 
 ---Returns the index within the string for the first occurrence of the pattern
-function string.firstIndexOf(str, pattern)
+function string.first_index_of(str, pattern)
 	if (pattern == '' or pattern == nil) then
 		return nil
 	end
@@ -465,7 +465,7 @@ end
 
 
 ---Returns the index within the string for the last occurrence of the pattern
-function string.lastIndexOf(str, pattern)
+function string.last_index_of(str, pattern)
 	if (pattern == '' or pattern == nil) then
 		return nil
 	end
@@ -484,7 +484,7 @@ end
 
 
 ---Returns the character at the specified index in the string
-function string.charAt(str, index)
+function string.char_at(str, index)
 	return str[index]
 end
 
@@ -492,7 +492,7 @@ end
 
 ---Returns the byte (unicode) value of the character at given index in the string
 ---Basically the same as 'string.byte'
-function string.byteAt(str, index)
+function string.byte_at(str, index)
 	return string.byte(str, index)
 end
 
@@ -500,7 +500,7 @@ end
 
 ---Returns the byte (unicode) value for the single given character
 ---nil is returned if not single character or otherwise
-function string.byteValue(char)
+function string.byte_value(char)
 	if (string.len(char) == 1) then
 		return string.byte(char, 1)
 	end
@@ -582,34 +582,10 @@ function string.equali(str1, str2)
 	return string.equal(string.lower(str1), string.lower(str1))
 end
 
-
-
----Prints the elements of an array, optionally displaying each element's index
-function printArray(array, showindex)
-	for k,v in ipairs(array) do
-		if (showindex) then
-			print(k, v)
-		else
-			print(v)
-		end
-	end
-end
-
-
-
----Prints the elements of a table in key-value pair style
-function printTable(_table)
-	for k,v in pairs(_table) do
-		print(k, v)
-	end
-end
-
-
-
 ---Returns the string representation of the given value. Be it either a
 ---number, boolean, string or a table. nil is returned otherwise for functions,
 ---threads, userdata and nil.
-function string.valueOf(value)
+function string.valueof(value)
 	local t = type(value)
 
 	if (t == 'string') then
@@ -654,8 +630,8 @@ end
 ---string rep times at the required index. An index of 0 specifies the front of
 ---the string
 ---For example:
---		string.insertRep("ello", "h", 4, 0) = "hhhhello"
-function string.insertRep(str, chars, rep, index)
+--		string.insert_rep("ello", "h", 4, 0) = "hhhhello"
+function string.insert_rep(str, chars, rep, index)
 	local rep = string.rep(chars, rep)
 	return string.insert(str, rep, index)
 end
@@ -664,7 +640,7 @@ end
 
 ---Returns a string where all characters starting at the given index have
 ---been removed up to the end of the string (including the start index character)
-function string.removeToEnd(str, index)
+function string.remove_to_end(str, index)
 	if (index == 1) then
 		return ""
 	else
@@ -674,9 +650,9 @@ end
 
 
 
----Returns a string where all charaters starting at the given index have
+---Returns a string where all char_aters starting at the given index have
 ---been removed down to the start of the string (including the start index character)
-function string.removeToStart(str, index)
+function string.remove_to_start(str, index)
 	if (index == string.len(str)) then
 		return ""
 	else
@@ -706,7 +682,7 @@ end
 ---Returns a string where the given string has had any leading
 ---characters removed
 ---If char is left blank, then whitespaces are removed
-function string.trimStart(str, char)
+function string.trim_start(str, char)
 	if (char == '' or char == nil) then
 		char = '%s'
 	end
@@ -720,7 +696,7 @@ end
 ---Returns a string where the gievn string has had any trailing
 ---characters removed
 ---If char is left blank, then whitespaces are removed
-function string.trimEnd(str, char)
+function string.trim_end(str, char)
 	if (char == '' or char == nil) then
 		char = '%s'
 	end
@@ -801,8 +777,8 @@ end
 
 
 ---Sorts the string into ascending order according to their unicode values.
-function string.sortAscending(str)
-	local chars = str:toCharArray()
+function string.sort_ascending(str)
+	local chars = str:to_char_array()
 	table.sort(chars, function(a,b) return a(1) < b(1) end)
 	return table.concat(chars)
 end
@@ -810,8 +786,8 @@ end
 
 
 ---Sorts the string into descending order according to their unicode values.
-function string.sortDescending(str)
-	local chars = str:toCharArray()
+function string.sort_descending(str)
+	local chars = str:to_char_array()
 	table.sort(chars, function(a,b) return a(1) > b(1) end)
 	return table.concat(chars)
 end
@@ -820,7 +796,7 @@ end
 
 ---Returns the character with the highest byte (unicode) value
 function string.highest(str)
-	local s = string.sortDescending(str)
+	local s = string.sort_descending(str)
 	return s[1]
 end
 
@@ -828,14 +804,14 @@ end
 
 ---Returns the character with the lowest byte (unicode) value
 function string.lowest(str)
-	local s = string.sortAscending(str)
+	local s = string.sort_ascending(str)
 	return s[1]
 end
 
 
 
 ---Checks to see if the string is empty
-function string.isEmpty(str)
+function string.is_empty(str)
 	if (str == '' or str == nil) then
 		return true
 	end
@@ -848,9 +824,9 @@ end
 ---Returns a table for the percentage of how much the string is formed of
 ---each word.
 --@usage
---string.wordPercents("hello, world!") = {"hello" = 38.46, "world" = 38.46}
-function string.wordPercents(str)
-	local t = string.wordTotals(str)
+--string.word_percents("hello, world!") = {"hello" = 38.46, "world" = 38.46}
+function string.word_percents(str)
+	local t = string.word_totals(str)
 	local count = string.len(str)
 	
 	for k,v in pairs(t) do
@@ -864,9 +840,9 @@ end
 
 ---Returns the percentage for how much of the string is formed by the given word
 --@usage
---string.wordPercent("hello, world!", "hello") = 50
-function string.wordPercent(str, word)
-	local t = string.wordPercents(str)
+--string.word_percent("hello, world!", "hello") = 50
+function string.word_percent(str, word)
+	local t = string.word_percents(str)
 	
 	if (t[word]) then
 		return t[word]
@@ -880,9 +856,9 @@ end
 ---Returns a table for the percentage of how much the string is formed of
 ---each character.
 --@usage
---string.charPercents("hello") = {"h" = 20, "e" = 20, "l" = 40, "o" = 20}
-function string.charPercents(str)
-	local t = string.charTotals(str)
+--string.char_percents("hello") = {"h" = 20, "e" = 20, "l" = 40, "o" = 20}
+function string.char_percents(str)
+	local t = string.char_totals(str)
 	local count = string.len(str)
 	
 	for k,v in pairs(t) do
@@ -896,9 +872,9 @@ end
 
 ---Returns the percentage for how much of the string is formed by the given character
 --@usage
---string.charPercent("hello", "h") = 20
-function string.charPercent(str, char)
-	local t = string.charPercents(str)
+--string.char_percent("hello", "h") = 20
+function string.char_percent(str, char)
+	local t = string.char_percents(str)
 	
 	if (t[char]) then
 		return t[char]
@@ -910,15 +886,15 @@ end
 
 
 ---Returns the percentage for how much of the string is formed by whitespace
-function string.spacePercent(str)
-	local count = string.spaceCount(str)
+function string.space_percent(str)
+	local count = string.space_count(str)
 	return (count / string.len(str)) * 100.0
 end
 
 
 
 ---Returns the number of uppercase characters in the string
-function string.upperCount(str)
+function string.upper_count(str)
 	local _, count = string.gsub(str, '%u', '')
 	return count
 end
@@ -927,15 +903,15 @@ end
 
 ---Returns the percentage for how much of the string is formed by uppercase
 ---characters
-function string.upperPercent(str)
-	local count = string.upperCount(str)
+function string.upper_percent(str)
+	local count = string.upper_count(str)
 	return (count / string.len(str)) * 100.0
 end
 
 
 
 ---Returns the number of lowercase characters in the string
-function string.lowerCount(str)
+function string.lower_count(str)
 	local _, count = string.gsub(str, '%l', '')
 	return count
 end
@@ -944,15 +920,15 @@ end
 
 ---Returns the percentage for how much of the string is formed by lowercase
 ---characters
-function string.lowerPercent(str)
-	local count = string.lowerCount(str)
+function string.lower_percent(str)
+	local count = string.lower_count(str)
 	return (count / string.len(str)) * 100.0
 end
 
 
 
 ---Returns the number of single digits in the string
-function string.digitCount(str)
+function string.digit_count(str)
 	local _, count = string.gsub(str, '%d', '')
 	return count
 end
@@ -960,7 +936,7 @@ end
 
 
 ---Returns a table of how many of each single digit appears in the string
-function string.digitTotals(str)
+function string.digit_totals(str)
 	local totals = {}
 	
 	for digit in string.gmatch(str, '%d') do
@@ -979,9 +955,9 @@ end
 ---Returns a table for the percentage of how much the string is formed of
 ---each single digit.
 --@usage
---string.digitPercents("hello, 2world!") = {"2" = 7.14}
-function string.digitPercents(str)
-	local t = string.digitTotals(str)
+--string.digit_percents("hello, 2world!") = {"2" = 7.14}
+function string.digit_percents(str)
+	local t = string.digit_totals(str)
 	local count = string.len(str)
 	
 	for k,v in pairs(t) do
@@ -995,9 +971,9 @@ end
 
 ---Returns the percentage for how much of the string is formed by the given single digit
 --@usage
---string.digitPercent("hello2", "2") = 16.67
-function string.digitPercent(str, digit)
-	local t = string.digitPercents(str)
+--string.digit_percent("hello2", "2") = 16.67
+function string.digit_percent(str, digit)
+	local t = string.digit_percents(str)
 	
 	if (t[digit]) then
 		return t[digit]
@@ -1009,7 +985,7 @@ end
 
 
 ---Returns the amount of punctuation in the string
-function string.puncCount(str)
+function string.punc_count(str)
 	local _, count = string.gsub(str, '%p', '')
 	return count
 end
@@ -1017,7 +993,7 @@ end
 
 
 ---Returns a table of how many of each punctuation appears in the string
-function string.puncTotals(str)
+function string.punc_totals(str)
 	local totals = {}
 	
 	for punc in string.gmatch(str, '%p') do
@@ -1036,9 +1012,9 @@ end
 ---Returns a table for the percentage of how much the string is formed of
 ---each punctuation.
 --@usage
---string.puncPercents("hello, world!") = {"," = 7.69, "!" = 7.69}
-function string.puncPercents(str)
-	local t = string.puncTotals(str)
+--string.punc_percents("hello, world!") = {"," = 7.69, "!" = 7.69}
+function string.punc_percents(str)
+	local t = string.punc_totals(str)
 	local count = string.len(str)
 	
 	for k,v in pairs(t) do
@@ -1052,9 +1028,9 @@ end
 
 ---Returns the percentage for how much of the string is formed by the given punctuation
 --@usage
---string.puncPercent("hello, world!", ",") = 7.69
-function string.puncPercent(str, punc)
-	local t = string.puncPercents(str)
+--string.punc_percent("hello, world!", ",") = 7.69
+function string.punc_percent(str, punc)
+	local t = string.punc_percents(str)
 	
 	if (t[punc]) then
 		return t[punc]
@@ -1114,14 +1090,14 @@ end
 
 
 ---Makes the string's first character lowercase
-function string.lowerFirst(str)
+function string.lower_first(str)
 	return str(1, string.lower(str[1]))
 end
 
 
 
 ---Makes the string's first character uppercase
-function string.upperFirst(str)
+function string.upper_first(str)
 	return str(1, string.upper(str[1]))
 end
 
@@ -1167,7 +1143,7 @@ function dectobin(dec, limit)
 	
 	local padding = limit - (string.len(bin) % limit)
 	if (padding ~= limit) then
-		bin = string.insertRep(bin, '0', padding, 0)
+		bin = string.insert_rep(bin, '0', padding, 0)
 	end
 	
 	return bin
@@ -1179,7 +1155,7 @@ end
 function string.uuencode(str)
 	local padding = 3 - (string.len(str) % 3)
 	if (padding ~= 3) then
-		str = string.insertRep(str, string.char(1), padding, string.len(str))
+		str = string.insert_rep(str, string.char(1), padding, string.len(str))
 	end
 	
 	local uuenc = ''
@@ -1207,7 +1183,7 @@ end
 function string.uudecode(str)	
 	local padding = 4 - (string.len(str) % 4)
 	if (padding ~= 4) then
-		str = string.insertRep(str, string.char(1), padding, string.len(str))
+		str = string.insert_rep(str, string.char(1), padding, string.len(str))
 	end
 	
 	local uudec = ''
@@ -1249,7 +1225,7 @@ function string.hash(str, check)
 end
 
 ---url字符转换
-function string.urlencodeChar(char)
+function string.urlencode_char(char)
 	return "%" .. string.format("%02X", string.byte(char))
 end
 
@@ -1258,7 +1234,7 @@ function string.urlencode(str)
 	---convert line endings
 	str = string.gsub(tostring(str), "\n", "\r\n")
 	---escape all characters but alphanumeric, '.' and '-'
-	str = string.gsub(str, "([^%w%.%- ])", string.urlencodeChar)
+	str = string.gsub(str, "([^%w%.%- ])", string.urlencode_char)
 	---convert spaces to "+" symbols
 	return string.gsub(str, " ", "+")
 end
@@ -1277,7 +1253,7 @@ function string.trim(str)
 end
 
 ---检测手机号码是否正确
-function string.isPoneNum( PhoneNumText )
+function string.is_phone_num( PhoneNumText )
     local phoneNum = string.trim(PhoneNumText);
     local start, length = string.find(phoneNum, "^1[3|4|5|8|7][0-9]%d+$"); ---判断手机号码是否正确
     if start ~= nil and length == 11 then
@@ -1308,7 +1284,7 @@ function string.utf8len(str)
 end
 
 --按照utf8格式取子串
-function string.utf8SubStr(str,subLen)
+function string.utf8_sub_str(str,subLen)
 
 	if subLen == 0 then return "" end 
 	if str == nil then 
@@ -1340,14 +1316,14 @@ function string.utf8SubStr(str,subLen)
 end
 
 
-function string.utf8CharStr( str, index )
+function string.utf8_char_str( str, index )
  
-	 local last = string.utf8SubStr(str, index - 1)
+	 local last = string.utf8_sub_str(str, index - 1)
 
-	 local tem = string.utf8SubStr(str, index) 
-	 local utf8CharStr = string.sub(str, #last + 1, #tem)
+	 local tem = string.utf8_sub_str(str, index) 
+	 local utf8_char_str = string.sub(str, #last + 1, #tem)
 
-	return utf8CharStr
+	return utf8_char_str
 end
 
 -- local string = _G['string'];

@@ -12,7 +12,7 @@ local File = {}
 --@table content 插入内容
 --@string path 目标文件
 --@number row 行数，默认插入到文件末尾
-File.insertToFile = function (content, path, row)
+File.insert_to_file = function (content, path, row)
 	file = io.open(path, "r")
 	local lines = {}
 	for line in file:lines() do
@@ -40,7 +40,7 @@ end
 --@string path 目标文件
 --@string text 关键字
 --@return 关键字所在行数，不存在返回空表
-File.findText = function (path, text)
+File.find_text = function (path, text)
 	local result = {}
 	local row = 0
 	file = io.open(path, "r")

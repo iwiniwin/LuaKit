@@ -26,7 +26,7 @@ table.sort(config, function ( a, b )
 end)
 
 -- 模块创建函数
-local function createModule( name, params )
+local function create_module( name, params )
     params = params or {}
     assert(params.file)
     local viewClass = require(params.file)
@@ -41,7 +41,7 @@ for i,v in ipairs(config) do
     if moduleList[v.key] then
         error("模块已经存在：" .. v.key)
     end
-    local mod = createModule(v.key, v.value)
+    local mod = create_module(v.key, v.value)
     moduleList[v.key] = mod
 end
 

@@ -1,6 +1,6 @@
 --[[--
 序列化lua table
-@module dumpToFile
+@module dump_to_file
 @author iwiniwin
 
 Date   2019-11-15 19:20:39
@@ -135,7 +135,7 @@ function M.writefile(str, file)
 end
 
 
-function M.dumpToFile(t,tabName,path)
+function M.dump_to_file(t,tabName,path)
 	return M.serialize(t,tabName,path)
 end
 

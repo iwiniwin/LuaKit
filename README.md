@@ -4,7 +4,7 @@ Lua核心工具包，提供对面向对象，组件系统，mvc模块化加载�
 部分特性介绍如下
 
 # Contents  
-- [打印复杂表结构](#dump与dumpToFile)  
+- [打印复杂表结构](#打印复杂表结构)  
 - [面向对象封装](#面向对象封装)  
 - [分模块加载](#分模块加载)  
 - [性能分析](#性能分析)  
@@ -12,7 +12,7 @@ Lua核心工具包，提供对面向对象，组件系统，mvc模块化加载�
 
 ### 打印复杂表结构
 dump支持按照指定格式打印任意类型的数据
-dumpToFile支持将数据序列化到文件
+dump_to_file支持将数据序列化到文件
 ```lua
 local data = {
     key1 = 34,
@@ -148,7 +148,7 @@ a = {}
 function test( ... )
     local b = {xxx = "xxx"}
     a.b = b
-    memoryMonitor:addToLeakMonitor(b, "b")  --将b添加到内存检测工具，此时a没有被释放掉 则b也释放不掉
+    memoryMonitor:add_to_leak_monitor(b, "b")  --将b添加到内存检测工具，此时a没有被释放掉 则b也释放不掉
 end
 test()
 

@@ -10,7 +10,7 @@ Last Modified time 2020-01-16 14:00:20
 require("_load")
 
 -- 测试面向对象
-local function testOOP( ... )
+local function test_oop( ... )
     local Class1 = class()
     function Class1:ctor( ... )
         dump("Class1:ctor")
@@ -37,7 +37,7 @@ local function testOOP( ... )
 end
 
 -- 测试dump
-local function testDump()
+local function test_dump()
     local data = {
         key1 = 34,
         key2 = "str",
@@ -52,7 +52,7 @@ local function testDump()
 end
 
 -- 测试分模块加载
-local function testLoadModule( ... )
+local function test_load_module( ... )
     local moduleList = require("mvc.Loader")
 
     -- 卸载模块
@@ -62,7 +62,7 @@ local function testLoadModule( ... )
 end
 
 -- 测试性能分析
-local function testProfile( ... )
+local function test_profile( ... )
     local new_profiler = require("utils.profiler")
     local profiler = new_profiler("call")
     profiler:start()  -- 开启性能分析
@@ -89,7 +89,7 @@ local function testProfile( ... )
 end
 
 -- 测试内存泄漏检测工具
-local function testMemoryMonitor( ... )
+local function test_memory_monitor( ... )
     local MemoryMonitor = require("utils.memory_monitor")
     local memoryMonitor = new(MemoryMonitor)
 
@@ -97,7 +97,7 @@ local function testMemoryMonitor( ... )
     function test( ... )
         local b = {xxx = "xxx"}
         a.b = b
-        memoryMonitor:addToLeakMonitor(b, "b")  --将b添加到内存检测工具，此时a没有被释放掉 则b也释放不掉
+        memoryMonitor:add_to_leak_monitor(b, "b")  --将b添加到内存检测工具，此时a没有被释放掉 则b也释放不掉
     end
     test()
 
@@ -109,10 +109,10 @@ local function testMemoryMonitor( ... )
     memoryMonitor:update()  -- 没有内存泄漏，这里不会打印日志
 end
 
--- testOOP()
--- testDump()
--- testLoadModule()
--- testProfile()
-testMemoryMonitor()
+-- test_oop()
+-- test_dump()
+-- test_load_module()
+-- test_profile()
+test_memory_monitor()
 
 -- 组件 事件系统 数据观察追踪 回退系统

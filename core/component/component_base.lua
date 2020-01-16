@@ -9,7 +9,7 @@ Last Modified time 2020-01-16 13:45:20
 ]]
 local ComponentBase = class()
 
-ComponentBase._className = "ComponentBase"
+ComponentBase._class_name = "ComponentBase"
 
 function ComponentBase:ctor( componentName, depends, priority )
     -- body

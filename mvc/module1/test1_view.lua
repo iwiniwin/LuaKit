@@ -9,14 +9,14 @@ Last Modified time 2020-01-16 14:00:03
 ]]
 local Test1Ctr = require("mvc.module1.test1_ctr")
 local Test1View = class()
-Test1View._className = "Test1View"
+Test1View._class_name = "Test1View"
 
 function Test1View:ctor( ... )
     dump("load Test1View")
-    self:bindCtr()
+    self:bind_ctr()
 end
 
-function Test1View:bindCtr(  )
+function Test1View:bind_ctr(  )
     if self.mCtr then
         return false
     else
@@ -25,12 +25,12 @@ function Test1View:bindCtr(  )
     end
 end
 
-function Test1View:getCtr( ... )
+function Test1View:get_ctr( ... )
     return self.mCtr
 end
 
 -- 更新视图
-function Test1View:updateView( data )
+function Test1View:update_view( data )
     -- 数据驱动
     -- 视图与逻辑分离，数据有什么就更新什么
     if data.title then
@@ -44,7 +44,7 @@ function Test1View:updateView( data )
     end
 end
 
-function Test1View:unBindCtr( ... )
+function Test1View:unbind_ctr( ... )
     if self.mCtr then
         delete(self.mCtr)
         self.mCtr = nil
@@ -53,7 +53,7 @@ end
 
 function Test1View:dtor( ... )
     dump("unload Test1View")
-    self:unBindCtr()
+    self:unbind_ctr()
 end
 
 return Test1View;

@@ -53,7 +53,7 @@ end
 
 -- 开始检测
 function MemoryMonitor:start( ... )
-    self.__memLeakMonitor = self:__memLeakMonitoring()
+    self.__memLeakMonitor = self:__mem_leak_monitoring()
 end
 
 
@@ -65,9 +65,9 @@ end
 
 @usage 
 local memoryMonitor = new(MemoryMonitor)
-memoryMonitor:addToLeakMonitor(self, "xx模块")
+memoryMonitor:add_to_leak_monitor(self, "xx模块")
 ]]
-function MemoryMonitor:addToLeakMonitor( t, tName )
+function MemoryMonitor:add_to_leak_monitor( t, tName )
     if not self.__memLeakMonitor then
         return
     end
@@ -92,7 +92,7 @@ end
 
 
 
-function MemoryMonitor:__memLeakMonitoring( ... )
+function MemoryMonitor:__mem_leak_monitoring( ... )
     local monitorTime = MonitorConfig.memLeakInterval
     local interval = MonitorConfig.memLeakInterval
     local str = nil
@@ -133,7 +133,7 @@ local b = {xxx = "xxx"}
 
 a.b = b
 
-memoryMonitor:addToLeakMonitor(b, "b")
+memoryMonitor:add_to_leak_monitor(b, "b")
 
 a = nil
 -- 此时b仍然没有被释放掉
