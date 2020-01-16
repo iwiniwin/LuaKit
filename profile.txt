@@ -1,0 +1,96 @@
+Total time spent in profiled functions: 0.116s
+
+Total call count spent in profiled functions: 12
+
+Lua Profile output created by profiler.lua. author: iwiniwin 
+
+
+-----------------------------------------------------------------------------------
+| FILE                            : FUNCTION         : TIME   : %     : Call count|
+-----------------------------------------------------------------------------------
+| L:E:\Project\LuaKit\test.lua:70 : aaa              : 0.1160 : 100.0 :         2 |
+| C:resume@=[C]:-1                : resume           : 0.0590 : 50.9  :         1 |
+| L:E:\Project\LuaKit\test.lua:81 : unknow           : 0.0590 : 50.9  :         1 |
+| L:E:\Project\LuaKit\test.lua:75 : ttt              : 0.0570 : 49.1  :         1 |
+| C:clock@=[C]:-1                 : clock            : ~      : ~     :         1 |
+| C:insert@=[C]:-1                : insert           : ~      : ~     :         1 |
+| C:sethook@=[C]:-1               : sethook          : ~      : ~     :         2 |
+| C:coroutine_create@=[C]:-1      : coroutine_create : ~      : ~     :         1 |
+| L:.\utils\profiler.lua:128      : stop             : ~      : ~     :         1 |
+| L:.\utils\profiler.lua:112      : create           : ~      : ~     :         1 |
+-----------------------------------------------------------------------------------
+
+
+--------------------- L:aaa@@E:\Project\LuaKit\test.lua:70 ---------------------
+Call count:            2
+Time spend total:       0.1160s
+Time spent in children: 0.0000s
+Time spent in self:     0.1160s
+
+------------------------------- C:resume@=[C]:-1 -------------------------------
+Call count:            1
+Time spend total:       0.0590s
+Time spent in children: 0.0590s
+Time spent in self:     0.0000s
+
+Child L:<function: 02CEF6C0>@@E:\Project\LuaKit\test.lua:81 called      1 times. Took 0.05900s
+
+------------------- L:<function: 02CEF6C0>@@E:\Project\LuaKit\test.lua:81 -------------------
+Call count:            1
+Time spend total:       0.0590s
+Time spent in children: 0.0590s
+Time spent in self:     0.0000s
+
+Child L:aaa@@E:\Project\LuaKit\test.lua:70      called      1 times. Took 0.05900s
+
+--------------------- L:ttt@@E:\Project\LuaKit\test.lua:75 ---------------------
+Call count:            1
+Time spend total:       0.0570s
+Time spent in children: 0.0570s
+Time spent in self:     0.0000s
+
+Child L:aaa@@E:\Project\LuaKit\test.lua:70      called      1 times. Took 0.05700s
+
+------------------------------- C:clock@=[C]:-1 --------------------------------
+Call count:            1
+Time spend total:       0.0000s
+Time spent in children: 0.0000s
+Time spent in self:     0.0000s
+
+------------------------------- C:insert@=[C]:-1 -------------------------------
+Call count:            1
+Time spend total:       0.0000s
+Time spent in children: 0.0000s
+Time spent in self:     0.0000s
+
+------------------------------- C:sethook@=[C]:-1 ------------------------------
+Call count:            2
+Time spend total:       0.0000s
+Time spent in children: 0.0000s
+Time spent in self:     0.0000s
+
+-------------------------- C:coroutine_create@=[C]:-1 --------------------------
+Call count:            1
+Time spend total:       0.0000s
+Time spent in children: 0.0000s
+Time spent in self:     0.0000s
+
+----------------------- L:stop@@.\utils\profiler.lua:128 -----------------------
+Call count:            1
+Time spend total:       0.0000s
+Time spent in children: 0.0000s
+Time spent in self:     0.0000s
+
+Child C:clock@=[C]:-1                           called      1 times. Took 0.00000s
+
+---------------------- L:create@@.\utils\profiler.lua:112 ----------------------
+Call count:            1
+Time spend total:       0.0000s
+Time spent in children: 0.0000s
+Time spent in self:     0.0000s
+
+Child C:insert@=[C]:-1                          called      1 times. Took 0.00000s
+Child C:sethook@=[C]:-1                         called      1 times. Took 0.00000s
+Child C:coroutine_create@=[C]:-1                called      1 times. Took 0.00000s
+
+END

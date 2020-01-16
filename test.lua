@@ -5,7 +5,7 @@ LuaKit测试用例
 
 Date   2019-11-15 19:20:39
 Last Modified by   iwiniwin
-Last Modified time 2020-01-16 13:43:51
+Last Modified time 2020-01-16 14:00:20
 ]]
 require("_load")
 
@@ -90,7 +90,7 @@ end
 
 -- 测试内存泄漏检测工具
 local function testMemoryMonitor( ... )
-    local MemoryMonitor = require("utils.MemoryMonitor")
+    local MemoryMonitor = require("utils.memory_monitor")
     local memoryMonitor = new(MemoryMonitor)
 
     a = {}

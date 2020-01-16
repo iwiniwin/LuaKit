@@ -5,7 +5,7 @@
 
 Date   2019-11-15 19:20:39
 Last Modified by   iwiniwin
-Last Modified time 2020-01-16 13:43:25
+Last Modified time 2020-01-16 13:57:21
 ]]
 require("core.object")
 require("lib.string")
@@ -15,7 +15,7 @@ time = require("lib.time")
 dump = require("utils.dump")
 
 
-dumpToFile = require("utils.dumpToFile").dumpToFile
+dump_to_file = require("utils.dump_to_file").dumpToFile
 
 --[[
     什么叫组合 Composition

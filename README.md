@@ -72,12 +72,12 @@ delete(c2)
 local ModuleConfig = {}
 
 ModuleConfig.Module1 = {
-    file = "mvc.module1.Test1View",
+    file = "mvc.module1.test1_view",
     initOrder = 2,  -- 配置模块加载顺序
 }
 
 ModuleConfig.Module2 = {
-    file = "mvc.module2.Test2View",
+    file = "mvc.module2.test2_view",
     initOrder = 1,
 }
 
@@ -141,7 +141,7 @@ Time spent in self:     0.1130s
 ### 内存泄漏检测
 对于游戏开发而言，内存泄露往往是最容易忽视的问题，很多开发者并不知道自己的代码是否存在内存泄露。此类问题可以借助MemoryMonitor来检测，具体原理是借助lua的弱引用，把某个需要观察的对象加入到弱表，如果不存在外部引用，那么在gc时候，弱表上的该对象也就自然消失，如果弱表还存在该对象，说明外部仍存在引用。
 ```lua
-local MemoryMonitor = require("utils.MemoryMonitor")
+local MemoryMonitor = require("utils.memory_monitor")
 local memoryMonitor = new(MemoryMonitor)
 
 a = {}
