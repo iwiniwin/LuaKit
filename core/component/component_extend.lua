@@ -23,7 +23,7 @@ local component_extend = function ( Class )
     end
 
     function Class:bind_component( ComponentClass )
-        assert(ComponentClass, "required componnet class")
+        assert(ComponentClass, "required component class")
         local component_name = tostring(ComponentClass);
         if not self._component_objects then self._component_objects = {} end
         if self._component_objects[component_name] then return end
@@ -44,20 +44,21 @@ local component_extend = function ( Class )
 
         component.object = self
         component:bind(self)
-        self._component_objects[component_name] = componnet
+        self._component_objects[component_name] = component
 
         self:sort_component_order(component)
 
-        return componnet
+        return component
     end
 
     function Class:unbind_component( ComponentClass )
         local component_name = tostring(ComponentClass);
         assert(self._component_objects and self._component_objects[component_name],
-            string.format("componnet %s not binding", component_name))
-        assert(not self._component_depends and not self._component_depends[component_name],
+            string.format("component %s not binding", component_name))
+        assert(not self._component_depends or not self._component_depends[component_name],
             string.format("component %s depends by other binding", component_name))
 
+        local component = self._component_objects[component_name]
         for i,DependComponentClass in ipairs(component.depends) do
             local depend_component_name = tostring(DependComponentClass)
             for i,name in ipairs(self._component_depends[depend_component_name]) do
@@ -71,7 +72,7 @@ local component_extend = function ( Class )
             end
         end
 
-        component.unbind(self)
+        component:unbind(self)
         self._component_objects[component_name] = nil
         component.object = nil
         delete(component)
