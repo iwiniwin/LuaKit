@@ -50,3 +50,5 @@ end
 ]]
 function ComponentBase:reset( object )
 end
+
+return ComponentBase

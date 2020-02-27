@@ -9,6 +9,7 @@ Last Modified time 2020-01-16 13:57:21
 ]]
 require("core.object")
 require("lib.string")
+local func_lib = require("lib.function")
 
 time = require("lib.time")
 
@@ -16,6 +17,8 @@ dump = require("utils.dump")
 
 
 dump_to_file = require("utils.dump_to_file").dump_to_file
+
+handler = func_lib.handler
 
 --[[
     什么叫组合 Composition

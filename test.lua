@@ -109,10 +109,41 @@ local function test_memory_monitor( ... )
     memoryMonitor:update()  -- 没有内存泄漏，这里不会打印日志
 end
 
+local function test_component( ... )
+    local ComponentBase = require("core.component.component_base")
+    local ComponentExtend = require("core.component.component_extend")
+
+    local Component1 = class(ComponentBase)
+    Component1.exportInterface = {
+        "test1",
+    }
+    function Component1:bind(object)
+        for i,v in ipairs(self.exportInterface) do
+            object:bind_method(self, v,   handler(self, self[v]));
+        end 
+    end
+    function Component1:unbind(object)
+        for i,v in ipairs(self.exportInterface) do
+            object:unbind_method(self, v);
+        end 
+    end
+    function Component1:test1( ... )
+        dump("call test1 ...")
+    end
+
+    local A = class()
+    ComponentExtend(A)
+
+    local a = new(A)
+    a:bind_component(Component1)
+    a:test1()
+end
+
 -- test_oop()
 -- test_dump()
 -- test_load_module()
 -- test_profile()
-test_memory_monitor()
+-- test_memory_monitor()
+test_component()
 
--- 组件 事件系统 数据观察追踪 回退系统
+-- 事件系统 数据观察追踪 回退系统
