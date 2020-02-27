@@ -11,20 +11,25 @@ local ComponentBase = class()
 
 ComponentBase._class_name = "ComponentBase"
 
-function ComponentBase:ctor( componentName, depends, priority )
+ComponentBase.exportInterface = {
+
+}
+
+--[[--
+        组件依赖列表 
+    ]]
+ComponentBase.depends = {}
+
+--[[--
+    组件优先级 
+]]
+ComponentBase.priority = 1;
+
+function ComponentBase:ctor( componentName )
     --[[--
         组件名称
     ]]
     self.name = componentName or "Component";
-    --[[--
-        组件依赖列表 
-    ]]
-    self.depends = depends or {};
-    --[[--
-        组件优先级 
-    ]]
-    self.priority = priority;
-
 end
 
 --[[--
@@ -33,6 +38,9 @@ end
     
 ]]
 function ComponentBase:bind( object )
+    for i,v in ipairs(self.exportInterface) do
+        object:bind_method(self, v[1],   handler(self, self[v[1]]), v[2], v[3]);
+    end 
 end
 
 --[[--
@@ -41,6 +49,9 @@ end
     
 ]]
 function ComponentBase:unbind( object )
+    for i,v in ipairs(self.exportInterface) do
+        object:unbind_method(self, v);
+    end 
 end
 
 --[[--
