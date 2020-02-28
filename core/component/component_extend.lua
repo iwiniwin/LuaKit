@@ -45,9 +45,6 @@ local component_extend = function ( Class )
         component.object = self
         component:bind(self)
         self._component_objects[component_name] = component
-
-        self:sort_component_order(component)
-
         return component
     end
 
@@ -90,72 +87,80 @@ local component_extend = function ( Class )
     end
 
     function Class:bind_method( component, method_name, method, deprecate_origin_method, call_origin_method_last )
-        local origin_method = self[method_name]
+        
         if not self._bind_methods then
             self._bind_methods = {}
-            self._bind_method_index = 0
         end
 
         if not self._bind_methods[method_name] then
             self._bind_methods[method_name] = {}
         end
 
-        local bind_method_index = self._bind_method_index + 1
-        self._bind_method_index = bind_method_index
-
-        local method_type = 2
-        if deprecate_origin_method then
-            method_type = 0
-        elseif call_origin_method_last then
-            method_type = 1
+        -- 根据优先级确定绑定
+        local index
+        local component_priority = component.priority or 1
+        for i,c in ipairs(self._bind_methods[method_name]) do
+            local priority = c[1].priority or 1
+            if component_priority > priority then
+                index = i
+                break
+            end 
         end
 
-        local chain = {
-            component, 
-            origin_method, 
-            bind_method_index = bind_method_index,
-            method_type = method_type,
-            method = method,
-        }
+        local chain = { component }
 
         local new_method
-        if not origin_method or deprecate_origin_method then
-            new_method = method
+
+        if index then
+            chain[2] = self._bind_methods[method_name][index][2]
         else
-            if call_origin_method_last then
-                new_method = function ( ... )
+            chain[2] = self[method_name]
+        end
+        
+        if deprecate_origin_method then
+            new_method = method
+        elseif call_origin_method_last then
+            new_method = function ( ... )
+                if chain[2] then
                     method(...)
                     return chain[2](...)
+                else
+                    return method(...)
                 end
-            else
-                new_method = function ( ... )
-                    local func = chain[2]
-                    if func then
-                        local ret = func(...)
-                        if ret then
-                            local args = {...}
-                            args[#args + 1] = ret
-                            return method(unpack(args))
-                        else
-                            return method(...)
-                        end
+            end
+        else
+            new_method = function ( ... )
+                local func = chain[2]
+                if func then
+                    local ret = func(...)
+                    if ret then
+                        local args = {...}
+                        args[#args + 1] = ret
+                        return method(unpack(args))
                     else
                         return method(...)
                     end
+                else
+                    return method(...)
                 end
             end
         end
 
-        self[method_name] = new_method
+        if index then
+            self._bind_methods[method_name][index][2] = new_method
+            table.insert(self._bind_methods[method_name], index, chain)
+        else
+            self[method_name] = new_method
+            table.insert(self._bind_methods[method_name], chain)
+        end
+
         chain[3] = new_method
-        table.insert(self._bind_methods[method_name], chain)
     end
 
     function Class:unbind_method( component, method_name )
         if not self._bind_methods or not self._bind_methods[method_name] then
             return
         end
-
         local methods = self._bind_methods[method_name]
         local count = #methods
         for i = count, 1, -1 do
@@ -172,60 +177,6 @@ local component_extend = function ( Class )
                 table.remove(methods, i)
                 break;
             end
-        end
-    end
-
-    function Class:sort_component_order( component )
-
-        if not self._bind_methods then
-            return 
-        end
-
-        if component.priority == 1 then
-            return
-        end
-
-        -- local component_export_methods = {}
-        for method_name,chains in pairs(self._bind_methods) do
-            for i,chain in ipairs(chains) do
-                if chain[1] == component then
-                    -- table.insert(component_export_methods, method_name)
-                    self:sort_component_method_order(component, method_name)
-                end
-            end
-        end
-
-        -- for i,v in ipairs(component_export_methods) do
-        --     print(i,v)
-        -- end
-    end
-
-    function Class:sort_component_method_order( component, method_name )
-        local bind_method_list = {}
-        for i,chain in ipairs(self._bind_methods[method_name]) do
-            table.insert(bind_method_list, chain)
-            self:unbind_method(chain[1], method_name)
-        end
-
-        table.sort(bind_method_list, function ( a, b )
-            local p1 = a[1].priority
-            local p2 = b[1].priority
-            if p1 == p2 then
-                return a.bind_method_index > b.bind_method_index
-            else
-                return p1 > p2
-            end
-        end)
-
-        for i,chain in ipairs(bind_method_list) do
-            local a, b 
-            if chain.method_type == 1 then
-                b = true
-            end
-            if chain.method_type == 0 then
-                a = true
-            end
-            self:bind_method(chain[1], method_name, chain.method, a, b)
         end
     end
 

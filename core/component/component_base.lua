@@ -50,7 +50,7 @@ end
 ]]
 function ComponentBase:unbind( object )
     for i,v in ipairs(self.exportInterface) do
-        object:unbind_method(self, v);
+        object:unbind_method(self, v[1]);
     end 
 end
 
