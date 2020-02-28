@@ -53,7 +53,7 @@ end
 
 -- 测试分模块加载
 local function test_load_module( ... )
-    local moduleList = require("mvc.Loader")
+    local moduleList = require("mvc.loader")
 
     -- 卸载模块
     for k,v in pairs(moduleList) do
