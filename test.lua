@@ -109,34 +109,41 @@ local function test_memory_monitor( ... )
     memoryMonitor:update()  -- 没有内存泄漏，这里不会打印日志
 end
 
+-- 测试组件系统
 local function test_component( ... )
     local ComponentBase = require("core.component.component_base")
     local ComponentExtend = require("core.component.component_extend")
 
+    local A = class()
+    ComponentExtend(A)
+
+    -- 组件1
     local Component1 = class(ComponentBase)
     Component1.exportInterface = {
-        "test1",
+        {"test1"},
     }
-    function Component1:bind(object)
-        for i,v in ipairs(self.exportInterface) do
-            object:bind_method(self, v,   handler(self, self[v]));
-        end 
-    end
-    function Component1:unbind(object)
-        for i,v in ipairs(self.exportInterface) do
-            object:unbind_method(self, v);
-        end 
-    end
     function Component1:test1( ... )
         dump("call test1 ...")
     end
 
-    local A = class()
-    ComponentExtend(A)
+    -- 组件2
+    local Component2 = class(ComponentBase)
+    Component2.exportInterface = {
+        {"test2"},
+    }
+    function Component2:test2( ... )
+        dump("call test2 ...")
+    end
 
     local a = new(A)
-    a:bind_component(Component1)
+
+    a:bind_component(Component1)  -- 对象a绑定组件1 拥有test1方法
+    a:bind_component(Component2)  -- 对象a绑定组件2 拥有test2方法
     a:test1()
+    a:test2()
+    
+    a:unbind_component(Component1)  -- 解绑组件1 丧失test1方法
+    -- a:test1()  -- 报错 attempt to call method 'test1' (a nil value)
 end
 
 -- test_oop()

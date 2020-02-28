@@ -5,6 +5,7 @@ Lua核心工具包，提供对面向对象，组件系统，mvc模块化加载�
 
 # Contents  
 - [打印复杂表结构](#打印复杂表结构)  
+- [组件系统](#组件系统)  
 - [面向对象封装](#面向对象封装)  
 - [分模块加载](#分模块加载)  
 - [性能分析](#性能分析)  
@@ -38,6 +39,44 @@ dump(data, "this is a dump test")
 -         "key6" = 78
 -     }
 - }
+```
+### 组件系统
+游戏开发中很多功能无法单纯靠继承实现，因为类继承会导致难以轻易改变结构，功能全都向上依赖，子类的数据爆炸，大量冗余数据和方法导致内存消耗过大。而采用组件系统，组件才是功能的携带者，可以实时增减，动态为对象增减功能。对象绑定组件就可以拥有该组件提供的功能，解绑组件则移除对应功能，通过组合构建拥有完整功能的对象，更加灵活解耦。
+例如: Fly组件提供飞的能力，鸟对象绑定Fly组件就可以飞，移除Fly组件就不能飞
+```lua
+local ComponentBase = require("core.component.component_base")
+local ComponentExtend = require("core.component.component_extend")
+
+local A = class()
+ComponentExtend(A)
+
+-- 组件1
+local Component1 = class(ComponentBase)
+Component1.exportInterface = {
+    {"test1"},
+}
+function Component1:test1( ... )
+    dump("call test1 ...")
+end
+
+-- 组件2
+local Component2 = class(ComponentBase)
+Component2.exportInterface = {
+    {"test2"},
+}
+function Component2:test2( ... )
+    dump("call test2 ...")
+end
+
+local a = new(A)
+
+a:bind_component(Component1)  -- 对象a绑定组件1 拥有test1方法
+a:bind_component(Component2)  -- 对象a绑定组件2 拥有test2方法
+a:test1()
+a:test2()
+
+a:unbind_component(Component1)  -- 解绑组件1 丧失test1方法
+-- a:test1()  -- 报错 attempt to call method 'test1' (a nil value)
 ```
 ### 面向对象封装
 基于Lua原表提供了`class`, `new`, `delete`等面向对象中思想中的常用函数
