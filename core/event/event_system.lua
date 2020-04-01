@@ -45,7 +45,7 @@ function EventSystem:on( event, func, params )
 
     if priority > 0 then
         event_listener.need_sort = true
-        self:sort(event_listener) -- 排序
+        self:sort(event_listener)
     end
 end
 
@@ -61,6 +61,7 @@ function EventSystem:off( event, func, params )
     for i,cb in ipairs(event_listener.list) do
         if cb.func == func and cb.target == params.target then
             if event_listener.emit_count > 0 then
+                -- 派发过程中只进行标记删除
                 cb.need_remove = true
                 event_listener.need_clean = true
             else
@@ -93,12 +94,18 @@ function EventSystem:emit( event, ... )
     local event_listener = self._listeners[event]
 
     local interrupt = false
-    for i = 1, #event_listener.list do
+
+    -- 这里不能使用ipairs，确保不会触发在派发过程中注册的事件
+    -- 只取当前已经注册的事件数量，如果在派发过程中再注册 则当次不会调用
+    local length = #event_listener.list
+    for i = 1, length do
         if interrupt == true then
             break
         end
         local cb = event_listener.list[i]
         if cb.func and cb.need_remove ~= true then
+            -- 这里必须使用count计数形式判断是否处于派发过程中
+            -- 如果仅使用true/false标记，在派发的回调中又进行派发，会导致标记错误
             event_listener.emit_count = event_listener.emit_count + 1
             if cb.target then
                 interrupt = cb.func(cb.target, ...)
@@ -116,6 +123,11 @@ function EventSystem:emit( event, ... )
 end
 
 function EventSystem:sort( listener )
+    --[[
+        在派发过程中不会进行优先级排序
+        比如当前事件有4个回调 1, 2, 3, 4，已经执行到3回调
+        如果在3回调中又注册了一个优先级最高的回调，需要往第一个插入，此时会导致3回调又被调用一次
+    ]]
     if listener.need_sort == true and listener.emit_count == 0 then
 
         table.sort(listener.list, function ( a, b )
@@ -131,6 +143,11 @@ function EventSystem:sort( listener )
 end
 
 function EventSystem:clean( listener )
+    --[[
+        在派发过程中不会进行移除
+        比如当前事件有4个回调 1, 2, 3, 4，已经执行到3回调
+        如果在3回调中移除了自己，则会导致4回调不会被触发
+    ]]
     if listener.need_clean == true and listener.emit_count == 0 then
         for i = #listener.list, 1, -1 do
             if listener.list[i].need_remove then
