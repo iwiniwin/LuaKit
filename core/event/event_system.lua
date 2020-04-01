@@ -4,7 +4,7 @@
 
 Date   2020-03-30 14:23:50
 Last Modified by   iwiniwin
-Last Modified time 2020-04-01 14:42:09
+Last Modified time 2020-04-01 16:18:51
 ]]
 local EventSystem = class()
 
@@ -38,7 +38,7 @@ function EventSystem:on( event, func, params )
         end
     end
 
-    local cb = {target = target, func = func, id = id}
+    local cb = {target = target, func = func, id = id, priority = priority}
     table.insert(event_listener.list, cb)
 
     id = id + 1
