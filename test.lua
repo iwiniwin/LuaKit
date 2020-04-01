@@ -5,7 +5,7 @@ LuaKit测试用例
 
 Date   2019-11-15 19:20:39
 Last Modified by   iwiniwin
-Last Modified time 2020-01-16 14:00:20
+Last Modified time 2020-04-01 16:59:33
 ]]
 require("_load")
 
@@ -146,11 +146,49 @@ local function test_component( ... )
     -- a:test1()  -- 报错 attempt to call method 'test1' (a nil value)
 end
 
+-- 测试事件分发系统
+local function test_event_system( ... )
+    local EventSystem = new(require("core.event.event_system"))
+    local Event = require("core.event.event")
+
+    -- 简单用法
+    EventSystem:on("test", function ( ... )
+        dump({...})
+    end)
+
+    EventSystem:emit("test", "param1", "param2")
+
+    -- 高级用法
+    local A = class()
+    function A:on_key_down( key )
+        dump(key, "key name A")
+    end
+    EventSystem:on(Event.KeyDown, A.on_key_down, {target = A})
+
+    local B = class()
+    function B:on_key_down( key )
+        dump(key, "key name B")
+
+        return true  -- 可以中断事件派发
+    end
+
+    -- 后注册的事件通过提高优先级可以保证先被调用
+    EventSystem:on(Event.KeyDown, B.on_key_down, {target = B, priority = 2})
+
+    EventSystem:emit(Event.KeyDown, "Ctrl")
+
+    EventSystem:off_all(B)  -- 通过target取消注册
+
+    EventSystem:emit(Event.KeyDown, "Ctrl")
+
+end
+
 -- test_oop()
 -- test_dump()
 -- test_load_module()
 -- test_profile()
 -- test_memory_monitor()
-test_component()
+-- test_component()
+test_event_system()
 
--- 事件系统 数据观察追踪 回退系统
+-- 数据观察追踪 回退系统

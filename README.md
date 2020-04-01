@@ -6,6 +6,7 @@ Lua核心工具包，提供对面向对象，组件系统，mvc模块化加载�
 # Contents  
 - [打印复杂表结构](#打印复杂表结构)  
 - [组件系统](#组件系统)  
+- [事件分发系统](#事件分发系统)  
 - [面向对象封装](#面向对象封装)  
 - [分模块加载](#分模块加载)  
 - [性能分析](#性能分析)  
@@ -79,6 +80,58 @@ a:test2()
 a:unbind_component(Component1)  -- 解绑组件1 丧失test1方法
 -- a:test1()  -- 报错 attempt to call method 'test1' (a nil value)
 ```
+### 事件分发系统
+基于观察者模式封装的一套事件分发系统
+
+```lua
+local EventSystem = new(require("core.event.event_system"))
+local Event = require("core.event.event")
+
+-- 简单用法
+EventSystem:on("test", function ( ... )
+    dump({...})
+end)
+
+EventSystem:emit("test", "param1", "param2")
+
+-- 高级用法
+local A = class()
+function A:on_key_down( key )
+    dump(key, "key name A")
+end
+EventSystem:on(Event.KeyDown, A.on_key_down, {target = A})
+
+local B = class()
+function B:on_key_down( key )
+    dump(key, "key name B")
+
+    return true  -- 可以中断事件派发
+end
+
+-- 后注册的事件通过提高优先级可以保证先被调用
+EventSystem:on(Event.KeyDown, B.on_key_down, {target = B, priority = 2})
+
+EventSystem:emit(Event.KeyDown, "Ctrl")
+
+EventSystem:off_all(B)  -- 通过target取消注册
+
+EventSystem:emit(Event.KeyDown, "Ctrl")
+```
+高级用法中，第一次emit时，首先触发B，B的回调返回true中断了派发，导致A的回调不会被执行，所以只打印了key name B
+第二次emit时，B已经被off_all，不会触发B的回调，自然也没有人再中断事件的派发，所以只打印了key name A
+输出结果如下所示：
+```
+- dump from: E:\Project\LuaKit\test.lua:155: in function 'func'
+- "<var>" = {
+-     1 = "param1"
+-     2 = "param2"
+- }
+- dump from: E:\Project\LuaKit\test.lua:170: in function 'func'
+- "key name B" = "Ctrl"
+- dump from: E:\Project\LuaKit\test.lua:164: in function 'func'
+- "key name A" = "Ctrl"
+```
+
 ### 面向对象封装
 基于Lua原表提供了`class`, `new`, `delete`等面向对象中思想中的常用函数
 ```lua
