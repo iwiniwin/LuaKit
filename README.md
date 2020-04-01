@@ -119,6 +119,7 @@ EventSystem:emit(Event.KeyDown, "Ctrl")
 ```
 高级用法中，第一次emit时，首先触发B，B的回调返回true中断了派发，导致A的回调不会被执行，所以只打印了key name B
 第二次emit时，B已经被off_all，不会触发B的回调，自然也没有人再中断事件的派发，所以只打印了key name A
+
 输出结果如下所示：
 ```
 - dump from: E:\Project\LuaKit\test.lua:155: in function 'func'
