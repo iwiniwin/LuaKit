@@ -1,4 +1,4 @@
---[[--事件配置
+--[[--事件配置，便于统一管理项目中所有使用的事件
 @module Event
 @author iwiniwin
 

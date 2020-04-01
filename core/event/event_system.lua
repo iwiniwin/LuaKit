@@ -21,6 +21,9 @@ function EventSystem:dtor(  )
     self._listeners = nil
 end
 
+--[[
+    注册监听一个事件
+]]
 function EventSystem:on( event, func, params )
     event = tostring(event)
     if not self._listeners[event] then
@@ -49,6 +52,9 @@ function EventSystem:on( event, func, params )
     end
 end
 
+--[[
+    反注册事件，取消对一个事件的监听
+]]
 function EventSystem:off( event, func, params )
     event = tostring(event)
     if not self._listeners[event] then
@@ -72,6 +78,9 @@ function EventSystem:off( event, func, params )
     end
 end
 
+--[[
+    根据target移除所有其注册的事件监听
+]]
 function EventSystem:off_all( target )
     for event,listener in pairs(self._listeners) do
 
@@ -86,6 +95,9 @@ function EventSystem:off_all( target )
     end
 end
 
+--[[
+    派发一个事件
+]]
 function EventSystem:emit( event, ... )
     event = tostring(event)
     if not self._listeners[event] then
@@ -158,6 +170,9 @@ function EventSystem:clean( listener )
     end
 end
 
+--[[
+    修改已经注册的一个事件监听的优先级
+]]
 function EventSystem:update_priority( event, func, params )
     event = tostring(event)
     if not self._listeners[event] then
