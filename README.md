@@ -1,7 +1,8 @@
 # LuaKit
 Lua核心工具包，提供对面向对象，组件系统，mvc模块化加载，事件分发系统等常用模式的封装。同时提供打印，内存泄漏检测，字符串操作等常用工具类。
+PS：添加了注释的Lua源码可以参考<a href="https://github.com/iwiniwin/source-code/tree/master/lua-5.1.4/src">这里</a>
 
-部分特性介绍如下，用法/测试用例请参考<a href="test.lua">这里</a>
+LuaKit部分特性介绍如下，用法/测试用例请参考<a href="test.lua">这里</a>
 
 # Contents  
 - [打印复杂表结构](#打印复杂表结构)  
