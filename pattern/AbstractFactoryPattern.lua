@@ -1,5 +1,5 @@
 --[[--
-工厂方法模式
+抽象工厂模式
 @module CORPattern
 @author iwiniwin
 
