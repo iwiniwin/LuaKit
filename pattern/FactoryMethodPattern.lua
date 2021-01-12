@@ -44,10 +44,10 @@ local PizzaStore = class();
 
 function PizzaStore:orderPizza( type )
     local pizza = self:createPizza(type);  -- 调用子类的创建披萨方法
-    -- pizza.prepare()
-    -- pizza.bake()
-    -- pizza.cut()
-    -- pizza.box()
+    -- pizza:prepare()
+    -- pizza:bake()
+    -- pizza:cut()
+    -- pizza:box()
     return pizza;
 end
 
