@@ -1,6 +1,6 @@
 --[[--
 适配器模式
-@module CORPattern
+@module AdapterPattern
 @author iwiniwin
 
 Date   2019-11-15 19:20:39

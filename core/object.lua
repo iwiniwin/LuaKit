@@ -128,7 +128,7 @@ end
 -- me:speak()
 function new(classType, ...)
   local obj = {};
-  setmetatable(obj, { __index = classType, __newindex = classType, __object=1});
+  setmetatable(obj, { __index = classType, __object=1});
   do
     local create;
     create =
