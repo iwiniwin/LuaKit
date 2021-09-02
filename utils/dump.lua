@@ -37,9 +37,7 @@ local function dump(value, desciption, nesting)
     local result = {}
     local traceback = string.split(debug_traceback("", 2), "\n")
     
-    --print("dump from: " .. string.trim(traceback[3]))
     local str = "- dump from: " .. string.trim(traceback[3]);
-    print(str);
     local function _dump(value, desciption, indent, nest, keylen)
         desciption = desciption or "<var>"
         local spc = ""
@@ -89,12 +87,8 @@ local function dump(value, desciption, nesting)
     end
     _dump(value, desciption, "- ", 1)
 
-    
-    for i, line in ipairs(result) do
-        -- str = str .. line .. "\r\n";
-        print(line)
-    end
-
+    str = str .. "\n" .. table.concat(result, "\n")
+    print(str)
 end
 
 return dump;
