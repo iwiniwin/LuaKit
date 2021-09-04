@@ -7,7 +7,7 @@ Date   2019-11-15 19:20:39
 Last Modified by   iwiniwin
 Last Modified time 2020-01-16 13:58:34
 ]]
-local ModuleConfig = require("mvc.module_config")
+local ModuleConfig = import("mvc.module_config")
 
 -- 根据配置读取模块
 local config = {}

@@ -7,7 +7,6 @@ Date   2019-11-15 19:20:39
 Last Modified by   iwiniwin
 Last Modified time 2020-04-01 16:59:33
 ]]
-require("_load")
 
 -- 测试面向对象
 local function test_oop( ... )
@@ -53,7 +52,7 @@ end
 
 -- 测试分模块加载
 local function test_load_module( ... )
-    local moduleList = require("mvc.loader")
+    local moduleList = import("mvc.loader")
 
     -- 卸载模块
     for k,v in pairs(moduleList) do
@@ -63,7 +62,7 @@ end
 
 -- 测试性能分析
 local function test_profile( ... )
-    local new_profiler = require("utils.profiler")
+    local new_profiler = import("utils.profiler")
     local profiler = new_profiler("call")
     profiler:start()  -- 开启性能分析
 
@@ -90,7 +89,7 @@ end
 
 -- 测试内存泄漏检测工具
 local function test_memory_monitor( ... )
-    local MemoryMonitor = require("utils.memory_monitor")
+    local MemoryMonitor = import("utils.memory_monitor")
     local memoryMonitor = new(MemoryMonitor)
 
     a = {}
@@ -111,8 +110,8 @@ end
 
 -- 测试组件系统
 local function test_component( ... )
-    local ComponentBase = require("core.component.component_base")
-    local ComponentExtend = require("core.component.component_extend")
+    local ComponentBase = import("core.component.component_base")
+    local ComponentExtend = import("core.component.component_extend")
 
     local A = class()
     ComponentExtend(A)
@@ -148,8 +147,8 @@ end
 
 -- 测试事件分发系统
 local function test_event_system( ... )
-    local EventSystem = new(require("core.event.event_system"))
-    local Event = require("core.event.event")
+    local EventSystem = new(import("core.event.event_system"))
+    local Event = import("core.event.event")
 
     -- 简单用法
     EventSystem:on("test", function ( ... )

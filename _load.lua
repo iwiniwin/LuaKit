@@ -11,6 +11,8 @@ require("init")()
 
 dump("Hello LuaKit")
 
+-- require("test")  -- 运行测试用例
+
 --[[
     什么叫组合 Composition
     在类中增加一个私有域，引用另一个已有的类的实例，通过调用实例的方法从而获得新的功能

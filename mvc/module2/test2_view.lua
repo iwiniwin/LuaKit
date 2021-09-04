@@ -7,7 +7,7 @@ Date   2019-11-15 19:20:39
 Last Modified by   iwiniwin
 Last Modified time 2020-01-16 13:59:57
 ]]
-local Test2Ctr = require("mvc.module2.test2_ctr")
+local Test2Ctr = import("mvc.module2.test2_ctr")
 local Test2View = class()
 Test2View._class_name = "Test2View"
 

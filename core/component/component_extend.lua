@@ -7,7 +7,7 @@ Date   2020-01-16 13:27:14
 Last Modified by   iwiniwin
 Last Modified time 2020-01-16 13:45:20
 ]]
-local ComponentFactory = require("core.component.component_factory")
+local ComponentFactory = import("core.component.component_factory")
 
 local component_extend = function ( Class )
 

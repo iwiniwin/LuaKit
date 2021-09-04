@@ -6,7 +6,7 @@ Date   2020-01-16 13:27:14
 Last Modified by   iwiniwin
 Last Modified time 2020-01-16 13:45:20
 ]]
-local ComponentBase = require("core.component.component_base")
+local ComponentBase = import("core.component.component_base")
 
 local ComponentFactory = {}
 
