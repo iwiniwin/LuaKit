@@ -362,7 +362,7 @@ function Profiler:report()
                 local thisfuncname = " " .. self:pretty_name(func) .. " "
                 if string.len( thisfuncname ) < 42 then
                     thisfuncname =
-                        string.rep( "-", (42 - string.len(thisfuncname))/2 ) .. thisfuncname
+                        string.rep( "-", math.floor((42 - string.len(thisfuncname))/2 )) .. thisfuncname
                     thisfuncname =
                         thisfuncname .. string.rep( "-", 42 - string.len(thisfuncname) )
                 end
