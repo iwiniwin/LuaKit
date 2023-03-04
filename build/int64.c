@@ -5,12 +5,14 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+// 将指定索引处的值转换为int64
 static int64_t
 _int64(lua_State *L, int index) {
 	int type = lua_type(L,index);
 	int64_t n = 0;
 	switch(type) {
 	case LUA_TNUMBER: {
+		// lua number 类型直接强转
 		lua_Number d = lua_tonumber(L,index);
 		n = (int64_t)d;
 		break;
@@ -23,6 +25,7 @@ _int64(lua_State *L, int index) {
 		}
 		int i = 0;
 		uint64_t n64 = 0;
+		// 最多8个字节字符串，每个字符1个字节对应8位，将每个字符对应的8位拼起来
 		for (i=0;i<(int)len;i++) {
 			n64 |= (uint64_t)str[i] << (i*8);
 		}
@@ -30,6 +33,7 @@ _int64(lua_State *L, int index) {
 		break;
 	}
 	case LUA_TLIGHTUSERDATA: {
+		// 指针地址值就是int64值
 		void * p = lua_touserdata(L,index);
 		n = (intptr_t)p;
 		break;
@@ -40,6 +44,7 @@ _int64(lua_State *L, int index) {
 	return n;
 }
 
+// 入栈一个int64，转换成指针入栈的
 static inline void
 _pushint64(lua_State *L, int64_t n) {
 	void * p = (void *)(intptr_t)n;
@@ -134,6 +139,7 @@ int64_unm(lua_State *L) {
 	return 1;
 }
 
+// 构建int64
 static int
 int64_new(lua_State *L) {
 	int top = lua_gettop(L);
@@ -147,12 +153,12 @@ int64_new(lua_State *L) {
 			_pushint64(L,n);
 			break;
 		default: {
-			int base = luaL_checkinteger(L,2);
+			int base = luaL_checkinteger(L,2);  // 第二个参数，指明几进制
 			if (base < 2) {
 				luaL_error(L, "base must be >= 2");
 			}
 			const char * str = luaL_checkstring(L, 1);
-			n = strtoll(str, NULL, base);
+			n = strtoll(str, NULL, base);  // 将字符串根据base转换成长整型数
 			_pushint64(L,n);
 			break;
 		}
@@ -198,11 +204,14 @@ tostring(lua_State *L) {
 	static char hex[16] = "0123456789ABCDEF";
 	uintptr_t n = (uintptr_t)lua_touserdata(L,1);
 	if (lua_gettop(L) == 1) {
+		// 只传了n, 不带base处理
 		luaL_Buffer b;
+		// 开辟一个字符串缓存，预分配28大小的空间
 		luaL_buffinitsize(L , &b , 28);
 		luaL_addstring(&b, "int64: 0x");
 		int i;
 		bool strip = true;
+		// 将int64转换为十六进制显示
 		for (i=15;i>=0;i--) {
 			int c = (n >> (i*4)) & 0xf;
 			if (strip && c ==0) {
@@ -216,6 +225,7 @@ tostring(lua_State *L) {
 		}
 		luaL_pushresult(&b);
 	} else {
+		// 带base处理
 		int base = luaL_checkinteger(L,2);
 		int shift , mask;
 		switch(base) {
@@ -229,6 +239,7 @@ tostring(lua_State *L) {
 			return 1;
 			}
 		case 10: {
+			// int64转换为10进制显示
 			int64_t dec = (int64_t)n;
 			luaL_Buffer b;
 			luaL_buffinitsize(L , &b , 28);
@@ -279,6 +290,7 @@ tostring(lua_State *L) {
 
 static void
 make_mt(lua_State *L) {
+	// 创建包含以下函数的元表
 	luaL_Reg lib[] = {
 		{ "__add", int64_add },
 		{ "__sub", int64_sub },
@@ -299,6 +311,7 @@ make_mt(lua_State *L) {
 
 int
 luaopen_int64(lua_State *L) {
+	// 64位机器上指针占8字节，32位机器上指针占用4字节
 	if (sizeof(intptr_t)!=sizeof(int64_t)) {
 		return luaL_error(L, "Only support 64bit architecture");
 	}
