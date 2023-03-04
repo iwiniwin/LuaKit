@@ -1,5 +1,5 @@
 --[[--
-控制台测试脚本
+LuaKit入口
 @module _load
 @author iwiniwin
 

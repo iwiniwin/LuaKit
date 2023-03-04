@@ -19,10 +19,10 @@ local time = {}
 -- print("你好")
 
 -- 单位是秒
-require("socket")
-time.sleep = function ( second )
-    socket.select(nil, nil, second)
-end
+-- require("socket")
+-- time.sleep = function ( second )
+--     socket.select(nil, nil, second)
+-- end
 
 -- time.sleep = function ( second )
 --     if second > 0 then
